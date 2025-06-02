@@ -7,7 +7,9 @@
   <link rel="stylesheet" href="style.css" />
 </head>
 <body>
-  <audio id="bg-music" src="NoiNayCoAnh.mp3" autoplay loop></audio>
+  <!-- Bỏ autoplay, chỉ preload -->
+  <audio id="bg-music" src="NoiNayCoAnh.mp3" loop preload="auto"></audio>
+
   <div id="container"></div>
 
   <script src="script.js"></script>
@@ -15,20 +17,23 @@
   <script>
     const audio = document.getElementById('bg-music');
 
+    // Khi load, tắt tiếng và cố gắng play để "giải phóng" luật chặn autoplay
     window.addEventListener('load', () => {
-      audio.muted = true;  
+      audio.muted = true;
       audio.play().catch(() => {
-
+        // Có thể bị chặn, không cần xử lý thêm
       });
     });
 
-    // Khi người dùng click hoặc chạm màn hình, bỏ mute và bật tiếng
+    // Bật tiếng khi người dùng tương tác lần đầu (click hoặc chạm)
     function unmuteAudio() {
       if (audio.muted) {
         audio.muted = false;
-        audio.play();
+        audio.play().catch(e => {
+          console.warn('Không thể phát nhạc:', e);
+        });
       }
-      // Chỉ chạy 1 lần thôi
+      // Chỉ kích hoạt 1 lần thôi
       window.removeEventListener('click', unmuteAudio);
       window.removeEventListener('touchstart', unmuteAudio);
     }
