@@ -10,18 +10,6 @@ const messages = [
   const images = ["images/1.JPG", "images/2.JPG", "images/3.JPG", "images/4.JPG", "images/5.JPG"];
   
   const container = document.getElementById("container");
-  const audio = document.getElementById("backgroundMusic"); // giả sử <audio id="backgroundMusic" src="music.mp3" preload="auto"></audio>
-  
-  // Hàm bật nhạc khi người dùng tương tác lần đầu
-  function playAudio() {
-    audio.play().catch(err => console.log("Lỗi phát nhạc:", err));
-    // Chỉ bật 1 lần nên remove event listener
-    document.body.removeEventListener("click", playAudio);
-    document.body.removeEventListener("touchstart", playAudio);
-  }
-  
-  document.body.addEventListener("click", playAudio);
-  document.body.addEventListener("touchstart", playAudio);
   
   function createFallingText() {
     const text = document.createElement("div");
