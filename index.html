@@ -7,33 +7,34 @@
   <link rel="stylesheet" href="style.css" />
 </head>
 <body>
-  <!-- Bỏ autoplay, chỉ preload -->
-  <audio id="bg-music" src="NoiNayCoAnh.mp3" loop preload="auto"></audio>
-
+  <audio id="bg-music" src="NoiNayCoAnh.mp3" autoplay loop></audio>
   <div id="container"></div>
 
   <script src="script.js"></script>
 
   <script>
-    const audio = document.getElementById("bg-music");
-  
-    // Sự kiện đầu tiên từ người dùng: click hoặc chạm
-    function enableAudio() {
-      audio.play().then(() => {
-        console.log("Phát nhạc thành công");
-      }).catch((e) => {
-        console.error("Không thể phát nhạc:", e);
+    const audio = document.getElementById('bg-music');
+
+    window.addEventListener('load', () => {
+      audio.muted = true;  // mute để trình duyệt cho phép autoplay
+      audio.play().catch(() => {
+        // Nếu lỗi thì không sao, vẫn giữ mute
       });
-  
-      // Gỡ sự kiện sau khi kích hoạt để tránh lặp lại
-      window.removeEventListener("click", enableAudio);
-      window.removeEventListener("touchstart", enableAudio);
+    });
+
+    // Khi người dùng click hoặc chạm màn hình, bỏ mute và bật tiếng
+    function unmuteAudio() {
+      if (audio.muted) {
+        audio.muted = false;
+        audio.play();
+      }
+      // Chỉ chạy 1 lần thôi
+      window.removeEventListener('click', unmuteAudio);
+      window.removeEventListener('touchstart', unmuteAudio);
     }
-  
-    // Gắn sự kiện click/chạm
-    window.addEventListener("click", enableAudio);
-    window.addEventListener("touchstart", enableAudio);
+
+    window.addEventListener('click', unmuteAudio);
+    window.addEventListener('touchstart', unmuteAudio);
   </script>
-  
 </body>
 </html>
