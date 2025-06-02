@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>For my babi</title>
+  <link rel="stylesheet" href="style.css" />
+</head>
+<body>
+  <audio id="bg-music" src="NoiNayCoAnh.mp3" autoplay loop></audio>
+  <div id="container"></div>
+
+  <script src="script.js"></script>
+
+  <script>
+    const audio = document.getElementById('bg-music');
+
+    window.addEventListener('load', () => {
+      audio.muted = true;  
+      audio.play().catch(() => {
+
+      });
+    });
+
+    // Khi người dùng click hoặc chạm màn hình, bỏ mute và bật tiếng
+    function unmuteAudio() {
+      if (audio.muted) {
+        audio.muted = false;
+        audio.play();
+      }
+      // Chỉ chạy 1 lần thôi
+      window.removeEventListener('click', unmuteAudio);
+      window.removeEventListener('touchstart', unmuteAudio);
+    }
+
+    window.addEventListener('click', unmuteAudio);
+    window.addEventListener('touchstart', unmuteAudio);
+  </script>
+</body>
+</html>
